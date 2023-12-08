@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Playlist Success</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e6f2ff; /* Light blue background */
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bXVzaWN8ZW58MHx8MHx8fDA%3D') no-repeat center center/cover;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff; /* White background for the container */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center; /* Centering text */
+            opacity: 0.65;
+        }
+
+        h1 {
+            color: #007bff; /* Blue color for headings */
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #666; /* Darker text for better readability */
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #4CAF50; /* Green color for buttons */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+        .btn:hover {
+            background-color: #45a049; /* Slightly darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Playlists Created Successfully!</h1>
+        {% for playlist_name, playlist_url in playlist_links.items() %}
+            <p>Your new {{ playlist_name }} playlist is now available on Spotify.</p>
+            <a href="{{ playlist_url }}" target="_blank" class="btn">Open {{ playlist_name }} Playlist</a>
+        {% endfor %}
+        <br>
+        <br>
+        <a href="{{ url_for('index') }}" class="btn">Home</a>
+    </div>
+</body>
+</html>
+
+

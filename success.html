@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Head content -->
+</head>
+<body>
+    <div class="container">
+        <h1>Playlists Created Successfully!</h1>
+        <p>Your new K-Means playlist is now available on Spotify.</p>
+        <a href="{{ kmeans_playlist_url }}" target="_blank" class="btn">Open K-Means Playlist</a>
+        <p>Your new SVD playlist is now available on Spotify.</p>
+        <a href="{{ svd_playlist_url }}" target="_blank" class="btn">Open SVD Playlist</a>
+        <p>Your new DBSCAN playlist is now available on Spotify.</p>
+        <a href="{{ dbscan_playlist_url }}" target="_blank" class="btn">Open DBSCAN Playlist</a>
+
+        <p>Your new Combined Recommendations playlist is now available on Spotify.</p>
+        <a href="{{ combined_playlist_url }}" target="_blank" class="btn">Open Combined Recommendations Playlist</a>
+
+        <a href="{{ url_for('index') }}" class="btn">Home</a>
+    </div>
+</body>
+</html>
+
+<!-- success.html -->
+<h1>Playlists Created Successfully!</h1>
+{% for playlist_name, playlist_url in playlist_links.items() %}
+  <p>Your new {{ playlist_name }} is now available on Spotify.</p>
+  <a href="{{ playlist_url }}">Open {{ playlist_name }}</a>
+{% endfor %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Head content -->
+</head>
+<body>
+    <div class="container">
+        <h1>Playlists Created Successfully!</h1>
+        {% for playlist_name, playlist_url in playlist_links.items() %}
+            <p>Your new {{ playlist_name }} playlist is now available on Spotify.</p>
+            <a href="{{ playlist_url }}" target="_blank" class="btn">Open {{ playlist_name }} Playlist</a>
+        {% endfor %}
+
+        <!-- Test with a hardcoded Spotify playlist URL -->
+        <p>Test Playlist</p>
+        <a href="https://open.spotify.com/playlist/test_playlist_id" target="_blank" class="btn">Open Test Playlist</a>
+
+        <a href="{{ url_for('index') }}" class="btn">Home</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Music Recommendations</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        header {
+            background: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bXVzaWN8ZW58MHx8MHx8fDA%3D') no-repeat center center/cover;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+        }
+
+        .centered-form {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Discover Your Music</h1>
+            <p>Explore new playlists curated just for you.</p>
+        </div>
+    </header>
+
+    <div class="centered-form">
+        <!-- Form to submit playlist creation request -->
+        <form action="{{ url_for('generate_playlists') }}" method="post">
+            <!-- Hidden fields for user_id, kmeans_tracks, and svd_tracks -->
+            <input type="hidden" name="user_id" value="{{ user_id }}">
+            <input type="hidden" name="kmeans_tracks" value="{{ kmeans_tracks|join(',') }}">
+            <input type="hidden" name="svd_tracks" value="{{ svd_tracks|join(',') }}">
+
+            <button type="submit" class="btn">View Playlist</button>
+        </form>
+    </div>
+
+    <div class="container content">
+        <div class="card">
+            <img src="data:image/jpeg;base64,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" alt="Music Theme">
+            <h3>Personalized Playlists</h3>
+            <p>Enjoy playlists that match your mood and preferences.</p>
+        </div>
+
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbC9LI7nlDDQvsd8wh860I7cYUT4R8DmmStg&usqp=CAU" alt="Music Theme">
+            <h3>Explore New Genres</h3>
+            <p>Discover music across all genres and styles.</p>
+        </div>
+
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNcLWDs5cWLS2WtRwfr9FXqd5RvaPoHBmJw&usqp=CAU" alt="Music Theme">
+            <h3>Exclusive Recommendations</h3>
+            <p>Get unique recommendations based on your listening history.</p>
+        </div>
+    </div>
+</body>
+</html>
